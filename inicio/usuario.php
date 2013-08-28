@@ -9,10 +9,8 @@
 	</head>
 	<body>
 	<?php	
-		$usuario		=	$_POST['usuario'] ;
-		$contrasena =	$_POST['contrasena'] ;
-		echo 	" <h1>Buenos dias $usuario. </h1> " ;	
-		echo 	" <p> Tu contrase&ntilde;a es: $contrasena </p> " ;
+		echo 	" <h1>Buenos dias $_POST['usuario']. </h1> " ;	
+		echo 	" <p> Tu contrase&ntilde;a es: $_POST['contrasena'] </p> " ;
 	?>
 	</body>
 </html >
