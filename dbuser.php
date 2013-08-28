@@ -27,6 +27,13 @@ class dbUser extends db
 	{
 		return $this->executeQuery( "SELECT * FROM DatosUsers" );
 	}
+
+	public static function userExists($nombre)
+	{
+	 	if (Validate::isName($nombre))
+	 		return $this->executeQuery( "SELECT cCodUse FROM DatosUsers LIMIT 1 WHERE nombre = ".pSQL($nombre) ); 
+	}
+
 }
 
 ?>
