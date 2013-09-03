@@ -90,6 +90,42 @@ class db
 		return self::$instance;
 	}
 
+	public function getRow($sql)
+	{
+	
+		$sql 					.= ' LIMIT 1';
+		$this->result 		= false;
+		$this->last_query = $sql;
+
+		$this->result 		= $this->query($sql);
+		if (!$this->result)
+			return false;
+
+		$this->last_cached = false;
+		$result = $this->nextRow($this->result);
+		if ($use_cache && $this->is_cache_enabled)
+			Cache::getInstance()->setQuery($sql, $result);
+		return $result;
+	}
+
+	/**
+	 * getValue return the first item of a select query.
+	 *
+	 * @param mixed $sql
+	 * @param bool $use_cache
+	 * @return mixed
+	 */
+	public function getValue($sql, $use_cache = true)
+	{
+		if ($sql instanceof DbQuery)
+			$sql = $sql->build();
+
+		if (!$result = $this->getRow($sql, $use_cache))
+			return false;
+		return array_shift($result);
+	}
+
+
 	public function systemTables()
 	{
 		return $this->executeQuery( "SELECT name FROM system.tables" );
